@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">Safeer</string>
+    //Screens
+    <string name="about">Here you can easily find nearby Masajid ,Dargah and Imam-bargha with there local events and services.</string>
+    <string name="getstarted">Get started</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="admin">Admin</string>
+    <string name="console">Admin Console</string>
+
+    <string name="ins">INSTRUCTION</string>
+
+
+
+    //EditText
+    <string name="email">Enter Email id</string>
+    <string name="password">Enter Password</string>
+    <string name="repassword">Re-Enter Password</string>
+    <string name="name">Enter Name</string>
+    <string name="city">City</string>
+    <string name="phone">Enter Active Phone No.</string>
+    <string name="places">Enter Name of ----.</string>
+    <string name="ashraDate">Choose Ashra date in any</string>
+
+    //Button
+    <string name="submit">Submit</string>
+    <string name="registerhere">REGISTER HERE</string>
+    <string name="alredyregister">ALREADY REGISTERED? - click here</string>
+    <string name="adminconsole">Admin Console</string>
+    <string name="picture">Add Picture</string>
+
+    //CheckBox
+    <string name="request">Request for Administrator control</string>
+    <string name="never">Never show this screen again </string>
+    <string name="wazu">Wazu</string>
+    <string name="water">Drink Water</string>
+    <string name="toilet">Toilet</string>
+    <string name="ac">AC</string>
+    <string name="stay">Stay</string>
+    <string name="other">Other</string>
+
+
+
+
+
+
 </resources>
