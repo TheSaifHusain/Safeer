@@ -20,7 +20,7 @@
     <string name="city">City</string>
     <string name="phone">Enter Active Phone No.</string>
     <string name="places">Enter Name of ----.</string>
-    <string name="ashraDate">Choose Ashra date in any</string>
+    <string name="ashraDate">Choose Ashra date if any</string>
 
     //Button
     <string name="submit">Submit</string>
@@ -39,6 +39,13 @@
     <string name="stay">Stay</string>
     <string name="other">Other</string>
 
+    //Console Screen
+    <string name="addMasjid">Add Masjid</string>
+    <string name="addImambargah">Add Imam-bargah</string>
+    <string name="addDargah">Add Dargah</string>
+    <string name="addMusafirkhana">Add Musafir-khana</string>
+    <string name="addEvent">Add Evenvt</string>
+    <string name="addFeedback">Add Feedback</string>
 
 
 

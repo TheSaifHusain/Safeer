@@ -1,7 +1,5 @@
 package com.thesaifhusain.safeer.presentation
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -9,55 +7,39 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.thesaifhusain.safeer.R
 import com.thesaifhusain.safeer.utils.genericButton
+import com.thesaifhusain.safeer.utils.genericDatePicker
 import com.thesaifhusain.safeer.utils.genericEditText
+import com.thesaifhusain.safeer.utils.genericHeading
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConsoleScreen() {
-    val mContext = LocalContext.current
-    val mYear: Int = 0
-    val mMonth: Int = 0
-    val mDay: Int = 0
     val mDate = remember { mutableStateOf("") }
-    val mDatePickerDialog = DatePickerDialog(
-        mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mDayOfMonth/${mMonth + 1}/$mYear"
-        },
-        mYear,
-        mMonth,
-        mDay
-    )
+    mDate.value = genericDatePicker()
 
     ConstraintLayout(Modifier.verticalScroll(rememberScrollState()).fillMaxSize()) {
         val (consoleText, image, editBox, services, button) = createRefs()
-        Text(
+        genericHeading(
             text = stringResource(id = R.string.console),
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 25.sp,
-            // style = MaterialTheme.typography.bodyMedium,
+            textSize = 24.sp,
             modifier = Modifier
                 .constrainAs(consoleText) {
-                    top.linkTo(parent.top, 14.dp)
+                    top.linkTo(parent.top)
                     start.linkTo(parent.start)
-                    end.linkTo(parent.end)
                 }
         )
         Selectimage(
@@ -85,11 +67,24 @@ fun ConsoleScreen() {
                     onClick = {}
                 )
                 genericEditText(text = "", label = stringResource(id = R.string.city), onClick = {})
-                genericEditText(text = "", label = stringResource(id = R.string.phone), onClick = {})
-                genericEditText(text = "", label = stringResource(id = R.string.email), onClick = {})
-                genericEditText(text = "", label = stringResource(id = R.string.ashraDate), onClick = {
-                    mDatePickerDialog.show()
-                })
+                genericEditText(
+                    text = "",
+                    label = stringResource(id = R.string.phone),
+                    onClick = {}
+                )
+                genericEditText(text = "", label = "Enter Contact Person name", onClick = {})
+                genericEditText(
+                    text = "",
+                    label = stringResource(id = R.string.email),
+                    onClick = {}
+                )
+                OutlinedTextField(
+                    value = mDate.value,
+                    onValueChange = { },
+                    readOnly = true,
+                    label = { Text(text = stringResource(id = R.string.ashraDate)) },
+                    trailingIcon = { genericDatePicker() }
+                )
             }
         }
         SelectServices(
@@ -172,6 +167,10 @@ fun SelectServices(modifier: Modifier) {
             ServiceCheckBox(text = "Jamat Namaz", isChecked = false, modifier = Modifier.weight(1f))
         }
         Row {
+            ServiceCheckBox(text = "Namaz", isChecked = false, modifier = Modifier.weight(1f))
+            ServiceCheckBox(text = "Munajat", isChecked = false, modifier = Modifier.weight(1f))
+        }
+        Row {
             ServiceCheckBox(text = "Drink Water", isChecked = false, modifier = Modifier.weight(1f))
             ServiceCheckBox(text = "Toilet", isChecked = false, modifier = Modifier.weight(1f))
         }
@@ -180,8 +179,16 @@ fun SelectServices(modifier: Modifier) {
             ServiceCheckBox(text = "Stay", isChecked = false, modifier = Modifier.weight(1f))
         }
         Row {
-            ServiceCheckBox(text = "Historical Place", isChecked = false, modifier = Modifier.weight(1f))
-            ServiceCheckBox(text = "Family Place", isChecked = false, modifier = Modifier.weight(1f))
+            ServiceCheckBox(
+                text = "Historical Place",
+                isChecked = false,
+                modifier = Modifier.weight(1f)
+            )
+            ServiceCheckBox(
+                text = "Family Place",
+                isChecked = false,
+                modifier = Modifier.weight(1f)
+            )
         }
     }
 }

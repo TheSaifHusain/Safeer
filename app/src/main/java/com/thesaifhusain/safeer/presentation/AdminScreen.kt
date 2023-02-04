@@ -15,16 +15,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
 import com.thesaifhusain.safeer.R
 
 @Composable
-fun AdminScreen() {
+fun AdminScreen(navController: NavHostController) {
     ConstraintLayout(Modifier.fillMaxSize()) {
         val (adminText, insText, rules, adminButton, row, footer) = createRefs()
         Text(
             text = stringResource(id = R.string.admin),
             fontWeight = FontWeight.SemiBold,
-            fontSize = 72.sp,
+            fontSize = 50.sp,
             // style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .constrainAs(adminText) {
@@ -36,7 +37,7 @@ fun AdminScreen() {
         Text(
             text = stringResource(id = R.string.ins),
             fontWeight = FontWeight.SemiBold,
-            fontSize = 30.sp,
+            fontSize = 20.sp,
             // style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .constrainAs(insText) {
@@ -72,8 +73,11 @@ fun AdminScreen() {
                     bottom.linkTo(adminButton.top)
                 }
         )
+//Console Button
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                      navController.navigate("console")
+                      },
             colors = ButtonDefaults.buttonColors(Color.White),
             modifier = Modifier.constrainAs(adminButton) {
                 bottom.linkTo(parent.bottom, 40.dp)
@@ -116,5 +120,5 @@ fun AdminScreen() {
 @Preview(name = "AdminScreen", showSystemUi = true)
 @Composable
 fun PreviewAdminScreen() {
-    AdminScreen()
+    //AdminScreen()
 }
