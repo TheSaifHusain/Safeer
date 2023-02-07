@@ -40,12 +40,12 @@
     <string name="other">Other</string>
 
     //Console Screen
-    <string name="addMasjid">Add Masjid</string>
-    <string name="addImambargah">Add Imam-bargah</string>
-    <string name="addDargah">Add Dargah</string>
-    <string name="addMusafirkhana">Add Musafir-khana</string>
-    <string name="addEvent">Add Evenvt</string>
-    <string name="addFeedback">Add Feedback</string>
+    <string name="addMasjid">Add \nMasjid</string>
+    <string name="addImambargah">Add \nImam-\nbargah</string>
+    <string name="addDargah">Add \nDargah</string>
+    <string name="addMusafirkhana">Add \nMusafir-\nkhana</string>
+    <string name="addEvent">Add \nEvent</string>
+    <string name="addFeedback">Give \nFeedback</string>
 
 
 

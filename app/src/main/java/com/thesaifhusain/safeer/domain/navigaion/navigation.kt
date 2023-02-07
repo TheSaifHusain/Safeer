@@ -10,7 +10,7 @@ import com.thesaifhusain.safeer.presentation.*
 fun Navigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "login"
     ) {
         composable("welcome") { WelcomeScreen() }
         composable("home") { HomeScreen() }

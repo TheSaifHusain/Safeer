@@ -8,13 +8,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.twotone.CalendarMonth
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
@@ -26,8 +26,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.thesaifhusain.safeer.R
-import java.util.Calendar
+import java.util.*
 
 @Composable
 fun genericHeading(
@@ -153,15 +154,36 @@ fun genericDatePicker(text: String = "Choose Date"): String {
 fun genericConsoleCard(
     painter: Painter = painterResource(id = R.drawable.mosque),
     text: String = stringResource(id = R.string.addMasjid),
-    modifer: Modifier = Modifier.size(140.dp)
+    textSize: TextUnit = 26.sp,
+    modifer: Modifier = Modifier.size(172.dp).padding(5.dp)
 ) {
     Card(onClick = { /*TODO*/ }, modifier = modifer) {
-        Image(
-            painter = painter,
-            contentDescription = "",
-            Modifier.size(50.dp)
-        )
-        Text(text = text, fontSize = 50.sp)
+        ConstraintLayout(
+            Modifier.padding(12.dp)
+                .fillMaxSize()
+        ) {
+            val (text_, image) = createRefs()
+            Image(
+                painter = painter,
+                contentDescription = "",
+                Modifier.size(50.dp)
+                    .alpha(0.5f)
+                    .constrainAs(image){
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                    }
+            )
+            Text(
+                text = text,
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier
+                    .padding(bottom = 5.dp)
+                    .constrainAs(text_){
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                    }
+            )
+        }
     }
 }
 

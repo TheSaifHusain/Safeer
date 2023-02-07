@@ -3,9 +3,7 @@ package com.thesaifhusain.safeer.presentation
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -43,9 +41,23 @@ fun HomeScreen() {
         genericHeading(
             text = stringResource(id = R.string.city),
             modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .constrainAs(headerText) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
+                }
+        )
+
+        Image(
+            painter = painterResource(id = R.drawable.footer),
+            contentDescription = "a",
+            contentScale = ContentScale.FillWidth,
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(footerImage) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
                 }
         )
         NewsCard(
@@ -53,16 +65,6 @@ fun HomeScreen() {
                 top.linkTo(headerText.bottom, 5.dp)
                 start.linkTo(parent.start, 14.dp)
                 end.linkTo(parent.end, 14.dp)
-            }
-        )
-        Image(
-            painter = painterResource(id = R.drawable.footer),
-            contentDescription = "a",
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier.constrainAs(footerImage) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
             }
         )
     }
