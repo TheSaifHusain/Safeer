@@ -1,5 +1,6 @@
 package com.thesaifhusain.safeer.presentation
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
@@ -7,66 +8,106 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.rounded.CheckCircleOutline
-import androidx.compose.material.icons.rounded.Phone
-import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.twotone.*
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.thesaifhusain.safeer.R
-import com.thesaifhusain.safeer.utils.genericHeading
 import com.thesaifhusain.safeer.utils.genericTag
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen() {
-    ConstraintLayout(
-        Modifier.fillMaxSize()
-    ) {
-        val (headerText, card, footerImage) = createRefs()
-        genericHeading(
-            text = stringResource(id = R.string.city),
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .constrainAs(headerText) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
+fun HomeScreen(navController: NavHostController) {
+    Scaffold(
+        topBar = {
+            SmallTopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                ),
+                title = {
+                    Text(
+                        "City",
+                        style = MaterialTheme.typography.headlineLarge,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                },
+                actions = {
+                    Text(
+                        text = "Want to \nAdd?",
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                    IconButton(
+                        onClick = {
+                                  navController.navigate("login")
+                        },
+                        colors = IconButtonDefaults.filledIconButtonColors(
+                            containerColor = Color.White
+                        )
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.AddCircle,
+                            contentDescription = "Localized description"
+                        )
+                    }
                 }
-        )
+            )
+        }
+    ) {
+        ConstraintLayout(
+            Modifier.fillMaxSize()
+        ) {
+            val (headerText, card, footerImage) = createRefs()
+            Image(
+                painter = painterResource(id = R.drawable.footer),
+                contentDescription = "a",
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .constrainAs(footerImage) {
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
+            )
 
-        Image(
-            painter = painterResource(id = R.drawable.footer),
-            contentDescription = "a",
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier
-                .fillMaxWidth()
-                .constrainAs(footerImage) {
-                    bottom.linkTo(parent.bottom)
+            NewsCard(
+                modifier = Modifier.constrainAs(card) {
+                    top.linkTo(parent.top, 72.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }
-        )
-        NewsCard(
-            modifier = Modifier.constrainAs(card) {
-                top.linkTo(headerText.bottom, 5.dp)
-                start.linkTo(parent.start, 14.dp)
-                end.linkTo(parent.end, 14.dp)
-            }
-        )
+            )
+        }
+
+//        genericHeading(
+//            text = stringResource(id = R.string.city),
+//            modifier = Modifier
+//                .clickable { navController.navigate("console") }
+//                .verticalScroll(rememberScrollState())
+//                .constrainAs(headerText) {
+//                    top.linkTo(parent.top)
+//                    start.linkTo(parent.start)
+//                }
+//        )
     }
 }
 
@@ -178,6 +219,6 @@ fun CardHeader() {
 @Preview(name = "HomeScreen", showSystemUi = true)
 @Composable
 private fun PreviewHomeScren() {
-    HomeScreen()
+    HomeScreen(navController = rememberNavController())
     // NewsCard(modifier = Modifier)
 }

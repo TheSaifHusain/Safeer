@@ -1,85 +1,111 @@
 package com.thesaifhusain.safeer.utils
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
+import com.thesaifhusain.safeer.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookShelf(
-    about: String,
-    getFileName: String,
-    getTopText: String,
-    getImage: Int,
-    fileName: MutableState<String>,
-    enableLoadPdf: MutableState<Boolean>,
-    updateTopText: MutableState<String>
-) {
-    Box(
-        Modifier
-            .padding(top = 70.dp)
-            .fillMaxWidth()
-            .clickable {
-                fileName.value = getFileName
-                enableLoadPdf.value = true
-                updateTopText.value = getTopText
-            }
-    ) {
-        // Text
-        Box(
-            modifier = Modifier
+fun Selectimage(modifier: Modifier = Modifier) {
+    Card(modifier = modifier) {
+        ConstraintLayout(
+            Modifier
                 .fillMaxWidth()
-                .padding(top = 105.dp)
+                .height(200.dp)
         ) {
-            OutlinedTextField(
-                value = about,
-                onValueChange = {},
-                modifier = Modifier.fillMaxWidth()
+            val (image, Button) = createRefs()
+            Image(
+                imageVector = Icons.Default.LocationOn,
+                contentDescription = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.large)
+                    .constrainAs(image) {
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }
             )
-        }
-        // Image
-        Box(
-            modifier = Modifier
-                .height(120.dp)
-                .fillMaxWidth()
-                .padding(start = 12.dp)
-        ) {
-            Row {
+            androidx.compose.material3.Button(
+                onClick = { /*TODO*/ },
+                modifier = Modifier.constrainAs(Button) {
+                    bottom.linkTo(parent.bottom, 5.dp)
+                    end.linkTo(parent.end, 5.dp)
+                }
+            ) {
                 Image(
-                    painter = painterResource(id = getImage),
+                    Icons.Default.Add,
                     contentDescription = "",
-                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(RoundedCornerShape(14.dp))
+                    Modifier.padding(end = 5.dp),
+                    contentScale = ContentScale.FillBounds
                 )
                 Text(
-                    text = getTopText,
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(bottom = 20.dp, top = 65.dp),
-                    textAlign = TextAlign.Start
+                    text = stringResource(id = R.string.picture),
+                    fontSize = 18.sp
                 )
             }
         }
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun commonDetail() {
+    FlowColumn(
+        Modifier.fillMaxWidth()
+            .padding(14.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        genericDropDown()
+        genericEditText(onClick = {})
+        genericEditText(onClick = {})
+        genericEditText(onClick = {})
+        genericEditText(onClick = {})
+    }
+}
 
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun personCard(modifier: Modifier,onClick : (() -> Unit)?) {
+    FlowColumn(modifier = modifier.fillMaxSize()) {
+        Row(horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Contact Person", fontSize = 35.sp,modifier=Modifier.weight(1f))
+            Image(Icons.Default.AddCircle, contentDescription = null,Modifier.weight(0.2f).size(40.dp)
+                .clickable { onClick })
+        }
+        Spacer(modifier = Modifier.size(12.dp))
+        genericEditText(label = " Enter Name", onClick = {})
+        Spacer(modifier = Modifier.size(5.dp))
+        genericEditText(label = " Enter Contact No.", onClick = {})
+    }
+}
+
+@OptIn( ExperimentalMaterial3Api::class)
+@Composable
+fun day(text: String) : Boolean{
+    val boolean = remember{ mutableStateOf(false) }
+        InputChip(
+            selected = boolean.value,
+            onClick = { boolean.value = !boolean.value},
+            label = { Text(text = text) })
+    return boolean.value
+}

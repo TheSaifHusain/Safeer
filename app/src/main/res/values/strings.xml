@@ -10,6 +10,13 @@
 
     <string name="ins">INSTRUCTION</string>
 
+    // Common
+    <string name="placeName">Enter Place Name</string>
+    <string name="address">Enter Address</string>
+    <string name="landmark">Enter Nearest Landmark</string>
+    <string name="pin">Enter Pin-Code</string>
+
+
 
 
     //EditText
@@ -32,20 +39,29 @@
     //CheckBox
     <string name="request">Request for Administrator control</string>
     <string name="never">Never show this screen again </string>
+
+    //Input Chip
     <string name="wazu">Wazu</string>
     <string name="water">Drink Water</string>
     <string name="toilet">Toilet</string>
+    <string name="parking">Parking</string>
+    <string name="stay">Stay - Choose type </string>
     <string name="ac">AC</string>
-    <string name="stay">Stay</string>
     <string name="other">Other</string>
+    <string name="dailyJamat">Daily Jamat</string>
+    <string name="weeklyJamat">Weekly Jamat - Choose Day</string>
+    <string name="ramdanOnly">Ramdan Only Jamat</string>
+    <string name="womanNamaz">Woman Namaz Arrangement </string>
 
     //Console Screen
-    <string name="addMasjid">Add \nMasjid</string>
+    <string name="addMasjid">Add Masjid</string>
     <string name="addImambargah">Add \nImam-\nbargah</string>
     <string name="addDargah">Add \nDargah</string>
     <string name="addMusafirkhana">Add \nMusafir-\nkhana</string>
     <string name="addEvent">Add \nEvent</string>
     <string name="addFeedback">Give \nFeedback</string>
+
+
 
 
 

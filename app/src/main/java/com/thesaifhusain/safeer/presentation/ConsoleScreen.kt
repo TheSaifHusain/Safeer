@@ -1,152 +1,68 @@
 package com.thesaifhusain.safeer.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.thesaifhusain.safeer.R
 import com.thesaifhusain.safeer.utils.genericConsoleCard
 import com.thesaifhusain.safeer.utils.genericHeading
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
-fun ConsoleScreen() {
+fun ConsoleScreen(navController: NavHostController) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.primary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        genericHeading(text = stringResource(id = R.string.adminconsole)
-        , textSize = 35.sp)
+        genericHeading(text = stringResource(id = R.string.adminconsole), textSize = 35.sp,)
         Spacer(modifier = Modifier.size(50.dp))
         FlowRow(
-            modifier = Modifier.verticalScroll(rememberScrollState())
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
                 .fillMaxSize(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            genericConsoleCard()
-            genericConsoleCard(text = stringResource(id = R.string.addDargah))
-            genericConsoleCard(text = stringResource(id = R.string.addImambargah))
-            genericConsoleCard(text = stringResource(id = R.string.addMusafirkhana))
-            genericConsoleCard(text = stringResource(id = R.string.addEvent))
-            genericConsoleCard(text = stringResource(id = R.string.addFeedback))
-        }
-    }
-}
-
-// @Composable
-// fun Selectimage(modifier: Modifier) {
-//    Card(modifier = modifier) {
-//        ConstraintLayout(Modifier.fillMaxSize()) {
-//            val (image, Button) = createRefs()
-//            Image(
-//                Icons.Default.LocationOn,
-//                contentDescription = "",
-//                contetScale = ContentScale.FillBounds,
-//                modifier = Modifier
-//                    .fillMaxSize()
-//                    .constrainAs(image) {
-//                        top.linkTo(parent.top)
-//                        bottom.linkTo(parent.bottom)
-//                        start.linkTo(parent.start)
-//                        end.linkTo(parent.end)
-//                    }
-//            )
-//            androidx.compose.material3.Button(
-//                onClick = { /*TODO*/ },
-//                modifier = Modifier.constrainAs(Button) {
-//                    bottom.linkTo(parent.bottom, 5.dp)
-//                    end.linkTo(parent.end, 5.dp)
-//                }
-//            ) {
-//                Image(
-//                    Icons.Default.Add,
-//                    contentDescription = "",
-//                    Modifier.padding(end = 5.dp),
-//                    contentScale = ContentScale.FillBounds
-//                )
-//                Text(
-//                    text = stringResource(id = R.string.picture),
-//                    fontSize = 18.sp
-//                )
-//            }
-//        }
-//    }
-// }
-
-@Composable
-fun SelectServices(modifier: Modifier) {
-    Card(
-        modifier = modifier
-    ) {
-        Text(
-            text = "Available Services : ",
-            modifier = Modifier.padding(12.dp),
-            fontSize = 18.sp
-        )
-        Row {
-            ServiceCheckBox(text = "Wazu", isChecked = false, modifier = Modifier.weight(1f))
-            ServiceCheckBox(text = "Jamat Namaz", isChecked = false, modifier = Modifier.weight(1f))
-        }
-        Row {
-            ServiceCheckBox(text = "Namaz", isChecked = false, modifier = Modifier.weight(1f))
-            ServiceCheckBox(text = "Munajat", isChecked = false, modifier = Modifier.weight(1f))
-        }
-        Row {
-            ServiceCheckBox(text = "Drink Water", isChecked = false, modifier = Modifier.weight(1f))
-            ServiceCheckBox(text = "Toilet", isChecked = false, modifier = Modifier.weight(1f))
-        }
-        Row {
-            ServiceCheckBox(text = "AC", isChecked = false, modifier = Modifier.weight(1f))
-            ServiceCheckBox(text = "Stay", isChecked = false, modifier = Modifier.weight(1f))
-        }
-        Row {
-            ServiceCheckBox(
-                text = "Historical Place",
-                isChecked = false,
-                modifier = Modifier.weight(1f)
+            genericConsoleCard(onClick = { } , modifier2 = Modifier.clickable { navController.navigate("masjid") })
+            genericConsoleCard(text = stringResource(id = R.string.addDargah), onClick = {},)
+            genericConsoleCard(text = stringResource(id = R.string.addImambargah), onClick = {})
+            genericConsoleCard(text = stringResource(id = R.string.addMusafirkhana), onClick = {})
+            genericConsoleCard(
+                painterResource(id = R.drawable.history),
+                text = stringResource(id = R.string.addEvent),
+                onClick = {
+                }
             )
-            ServiceCheckBox(
-                text = "Family Place",
-                isChecked = false,
-                modifier = Modifier.weight(1f)
+            genericConsoleCard(
+                painterResource(id = R.drawable.baseline_feedback_24),
+                text = stringResource(id = R.string.addFeedback),
+                onClick = {
+                }
             )
         }
-    }
-}
-
-@Composable
-fun ServiceCheckBox(text: String = "", isChecked: Boolean = false, modifier: Modifier = Modifier) {
-    val isChecked0 = remember { mutableStateOf(isChecked) }
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Checkbox(
-            checked = isChecked0.value,
-            onCheckedChange = { isChecked0.value = it },
-            modifier = Modifier.weight(0.5f)
-        )
-        Text(text = text, modifier = Modifier.weight(1.2f))
     }
 }
 
 @Preview(name = "ConsoleScreen", showSystemUi = true)
 @Composable
 private fun PreviewConsoleScreen() {
-    ConsoleScreen()
+    ConsoleScreen(navController = rememberNavController())
 }
 
 // @Composable

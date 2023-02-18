@@ -6,26 +6,33 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.twotone.WaterDrop
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.thesaifhusain.safeer.R
 import java.util.*
@@ -75,7 +82,12 @@ fun genericButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun genericEditText(text: String, label: String, onClick: (() -> Unit)?): String {
+fun genericEditText(
+    text: String = "",
+    label: String = "",
+    inputType: KeyboardType = KeyboardType.Text,
+    onClick: (() -> Unit)
+): String {
     val textData = remember { mutableStateOf(text) }
     OutlinedTextField(
         value = textData.value,
@@ -84,6 +96,8 @@ fun genericEditText(text: String, label: String, onClick: (() -> Unit)?): String
         modifier = Modifier
             .padding(bottom = 5.dp)
             .clickable { onClick }
+            .fillMaxWidth(),
+        keyboardOptions = KeyboardOptions(keyboardType = inputType)
     )
     return textData.value
 }
@@ -153,13 +167,15 @@ fun genericDatePicker(text: String = "Choose Date"): String {
 @Composable
 fun genericConsoleCard(
     painter: Painter = painterResource(id = R.drawable.mosque),
-    text: String = stringResource(id = R.string.addMasjid),
+    text: String = "Add \nMasjid",
     textSize: TextUnit = 26.sp,
-    modifer: Modifier = Modifier.size(172.dp).padding(5.dp)
+    modifier: Modifier = Modifier.size(172.dp).padding(5.dp),
+    onClick: (() -> Unit)?,
+    modifier2: Modifier = Modifier
 ) {
-    Card(onClick = { /*TODO*/ }, modifier = modifer) {
+    Card(onClick = { /*TODO*/ }, modifier = modifier) {
         ConstraintLayout(
-            Modifier.padding(12.dp)
+            modifier2.padding(12.dp)
                 .fillMaxSize()
         ) {
             val (text_, image) = createRefs()
@@ -168,7 +184,7 @@ fun genericConsoleCard(
                 contentDescription = "",
                 Modifier.size(50.dp)
                     .alpha(0.5f)
-                    .constrainAs(image){
+                    .constrainAs(image) {
                         top.linkTo(parent.top)
                         end.linkTo(parent.end)
                     }
@@ -178,7 +194,7 @@ fun genericConsoleCard(
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier
                     .padding(bottom = 5.dp)
-                    .constrainAs(text_){
+                    .constrainAs(text_) {
                         bottom.linkTo(parent.bottom)
                         start.linkTo(parent.start)
                     }
@@ -187,8 +203,163 @@ fun genericConsoleCard(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun genericDropDown() {
+    // Declaring a boolean value to store
+    // the expanded state of the Text Field
+    var mExpanded by remember { mutableStateOf(false) }
+
+    // Create a list of cities
+    val mCities = listOf("Delhi", "Mumbai", "Chennai", "Kolkata", "Hyderabad", "Bengaluru", "Pune")
+
+    // Create a string value to store the selected city
+    var mSelectedText by remember { mutableStateOf("") }
+
+    var mTextFieldSize by remember { mutableStateOf(Size.Zero) }
+
+    // Up Icon when expanded and down icon when collapsed
+    val icon = if (mExpanded) {
+        Icons.Filled.KeyboardArrowUp
+    } else {
+        Icons.Filled.KeyboardArrowDown
+    }
+
+    Column(Modifier.padding(20.dp)) {
+        // Create an Outlined Text Field
+        // with icon and not expanded
+        OutlinedTextField(
+            value = mSelectedText,
+            onValueChange = { mSelectedText = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .onGloballyPositioned { coordinates ->
+                    // This value is used to assign to
+                    // the DropDown the same width
+                    mTextFieldSize = coordinates.size.toSize()
+                },
+            label = { Text("Label") },
+            trailingIcon = {
+                Icon(
+                    icon,
+                    "contentDescription",
+                    Modifier.clickable { mExpanded = !mExpanded }
+                )
+            }
+        )
+
+        // Create a drop-down menu with list of cities,
+        // when clicked, set the Text Field text as the city selected
+        DropdownMenu(
+            expanded = mExpanded,
+            onDismissRequest = { mExpanded = false },
+            modifier = Modifier
+                .width(with(LocalDensity.current) { mTextFieldSize.width.toDp() })
+        ) {
+            mCities.forEach { label ->
+                DropdownMenuItem(
+                    onClick = {
+                        mSelectedText = label
+                        mExpanded = false
+                    },
+                    text = { Text(text = label ) }
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+// @Composable
+// fun genericDropDown() {
+//    val listItems = arrayOf("Favorites", "Options", "Settings", "Share")
+//
+//    var selectedItem by remember {
+//        mutableStateOf("")
+//    }
+//
+//    var expanded by remember {
+//        mutableStateOf(false)
+//    }
+//
+//    ExposedDropdownMenuBox(
+//        expanded = expanded,
+//        onExpandedChange = {
+//            expanded = !expanded
+//        }
+//    ) {
+//        OutlinedTextField(
+//            value = selectedItem,
+//            onValueChange = { selectedItem = it },
+//            label = { Text(text = "Select City") },
+//            trailingIcon = {
+//                ExposedDropdownMenuDefaults.TrailingIcon(
+//                    expanded = expanded
+//                )
+//            },
+//            colors = ExposedDropdownMenuDefaults.textFieldColors()
+//            , modifier = Modifier.fillMaxWidth()
+//        )
+//
+//        // filter options based on text field value
+//        val filteringOptions =
+//            listItems.filter { it.contains(selectedItem, ignoreCase = true) }
+//
+//        if (filteringOptions.isNotEmpty()) {
+//            ExposedDropdownMenu(
+//                expanded = expanded,
+//                onDismissRequest = { expanded = false }
+//            ) {
+//                filteringOptions.forEach { selectionOption ->
+//                    DropdownMenuItem(
+//                        onClick = {
+//                            selectedItem = selectionOption
+//                            expanded = false
+//                        },
+//                        text = { Text(text = selectionOption) }
+//                    )
+//                }
+//            }
+//        }
+//    }
+// }
+
+@Composable
+fun genericContactPerson() {
+    Card(Modifier.padding(12.dp)) {
+        Text(text = "Contact Person", fontSize = 20.sp)
+        genericEditText(
+            text = "",
+            label = "Enter Person Name",
+            onClick = {}
+        )
+        genericEditText(
+            text = "",
+            label = "Enter Contact No.",
+            onClick = {},
+            inputType = KeyboardType.Number
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun genericInputChip(lable: String = "Defualt Text", icon: ImageVector = Icons.TwoTone.WaterDrop): Boolean {
+    val selected = remember { mutableStateOf(false) }
+    InputChip(
+        selected = selected.value,
+        onClick = { selected.value = !selected.value },
+        label = { Text(text = lable) },
+        leadingIcon = {
+            Image(icon, contentDescription = null)
+        },
+        modifier = Modifier.padding(start = 5.dp, end = 5.dp)
+    )
+    return selected.value
+}
+
 @Preview(showSystemUi = true)
 @Composable
 private fun a() {
-    genericConsoleCard()
+    genericContactPerson()
 }

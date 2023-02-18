@@ -1,7 +1,6 @@
 package com.thesaifhusain.safeer.presentation
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -30,10 +29,6 @@ fun LoginScreen(navController: NavHostController) {
         genericHeading(
             text = stringResource(id = R.string.login),
             modifier = Modifier
-                .clickable {
-// admin click
-                    navController.navigate("admin")
-                }
                 .constrainAs(loginText) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
@@ -77,7 +72,7 @@ fun LoginScreen(navController: NavHostController) {
 // Submit Button
                 Button(
                     onClick = {
-                        navController.navigate("home")
+                        navController.navigate("console")
                     },
                     modifier = Modifier.padding(bottom = 5.dp)
                         .fillMaxWidth(0.7f),
