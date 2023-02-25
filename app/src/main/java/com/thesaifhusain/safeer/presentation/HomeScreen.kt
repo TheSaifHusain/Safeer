@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.thesaifhusain.safeer.MainActivity
 import com.thesaifhusain.safeer.R
 import com.thesaifhusain.safeer.utils.genericTag
 
@@ -43,7 +45,7 @@ fun HomeScreen(navController: NavHostController) {
                 ),
                 title = {
                     Text(
-                        "City",
+                        text = stringResource(id = R.string.city),
                         style = MaterialTheme.typography.headlineLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -57,7 +59,7 @@ fun HomeScreen(navController: NavHostController) {
                     )
                     IconButton(
                         onClick = {
-                                  navController.navigate("login")
+                            navController.navigate("login")
                         },
                         colors = IconButtonDefaults.filledIconButtonColors(
                             containerColor = Color.White
@@ -82,6 +84,7 @@ fun HomeScreen(navController: NavHostController) {
                 contentScale = ContentScale.FillWidth,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable {  }
                     .constrainAs(footerImage) {
                         bottom.linkTo(parent.bottom)
                         start.linkTo(parent.start)

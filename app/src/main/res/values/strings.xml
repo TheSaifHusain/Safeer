@@ -2,7 +2,7 @@
     <string name="app_name">Safeer</string>
     //Screens
     <string name="about">Here you can easily find nearby Masajid ,Dargah and Imam-bargha with there local events and services.</string>
-    <string name="getstarted">Get started</string>
+    <string name="getstarted">یہاں آپ مقامی تقریبات اور خدمات کے ساتھ قریبی مسجد، درگاہ اور امام بارگاہ آسانی سے تلاش کر سکتے ہیں۔</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="admin">Admin</string>
@@ -60,11 +60,11 @@
     <string name="addMusafirkhana">Add \nMusafir-\nkhana</string>
     <string name="addEvent">Add \nEvent</string>
     <string name="addFeedback">Give \nFeedback</string>
-
-
-
-
-
+    <string name="selectcLanguage">Select Language</string>
+    <string name="English" translatable="false">English</string>
+    <string name="Hindi" translatable="false">हिंदी</string>
+    <string name="Urdu" translatable="false">اردو</string>
+    <string name="selectCity">Select City</string>
 
 
 </resources>

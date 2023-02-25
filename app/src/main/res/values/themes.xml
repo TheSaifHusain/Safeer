@@ -2,7 +2,8 @@
 <resources>
 
     <style name="Theme.Safeer" parent="android:Theme.Material.Light.NoActionBar" >
-        <item name="android:navigationBarColor">#CE9138</item>
+<!--        <item name="android:navigationBarColor">#CE9138</item>-->
+<!--        <item name="android:windowTranslucentNavigation">true</item>-->
     </style>
 
 </resources>

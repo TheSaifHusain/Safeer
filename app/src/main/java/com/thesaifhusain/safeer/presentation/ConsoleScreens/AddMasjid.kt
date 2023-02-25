@@ -1,5 +1,6 @@
 package com.thesaifhusain.safeer.presentation.ConsoleScreens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -37,18 +38,17 @@ fun AddMasjid() {
                 .verticalScroll(rememberScrollState())
         ) {
             Spacer(modifier = Modifier.size(20.dp))
-            Selectimage()
+            genericImageSelect()
             Spacer(modifier = Modifier.size(12.dp))
             commonDetail()
             Spacer(modifier = Modifier.size(20.dp))
             personCard(
-                modifier = Modifier,
-                onClick = { increaseContact.value = ! increaseContact.value }
+                modifier = Modifier
+                    .clickable { increaseContact.value = ! increaseContact.value }
             )
             if(increaseContact.value){
                 personCard(
-                    modifier = Modifier,
-                    onClick = {  }
+                    modifier = Modifier
                 )
             }
             Spacer(modifier = Modifier.size(20.dp))

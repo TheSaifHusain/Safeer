@@ -1,42 +1,180 @@
 package com.thesaifhusain.safeer
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.thesaifhusain.safeer.domain.navigaion.Navigation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.thesaifhusain.safeer.ui.theme.SafeerTheme
+import com.thesaifhusain.safeer.utils.genericDropDown
+import com.thesaifhusain.safeer.utils.genericHeading
+import java.util.Locale
 
+lateinit var selectetLanguage: MutableState<String>
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val window: Window = this.window
+            window.navigationBarColor = MaterialTheme.colorScheme.primary.toArgb()
             SafeerTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    Navigation(navController = navController)
-                    window.navigationBarColor.and(R.color.footerColor)
+                    // changeLanguage("hi")
+                    // val navController = rememberNavController()
+                    // Navigation(navController = navController)
+                    SelectLanguage()
+                    changeLanguage()
                 }
             }
         }
     }
+
+    fun changeLanguage() {
+        Locale.setDefault(Locale(selectetLanguage.value))
+
+        val config = Configuration()
+        config.locale = Locale(selectetLanguage.value)
+        baseContext.resources.updateConfiguration(
+            config,
+            baseContext.resources.displayMetrics
+        )
+    }
 }
 
-@Preview(showBackground = true)
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun SelectLanguage() {
+    // selectetLanguage = remember{ mutableStateOf("") }
+    FlowColumn(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        genericHeading(
+            text = stringResource(R.string.selectcLanguage),
+            textSize = 28.sp
+        )
+        Spacer(modifier = Modifier.padding(100.dp))
+        Languages()
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun Languages(): String {
+    selectetLanguage = remember { mutableStateOf("en") }
+    val select = remember { mutableStateOf(false) }
+
+    FlowColumn {
+        Card(
+            Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight(0.1f)
+                .selectableGroup()
+                .clickable {
+                    selectetLanguage.value = "en"
+                }
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    stringResource(R.string.English),
+                    fontSize = 22.sp
+                )
+            }
+        }
+        Spacer(modifier = Modifier.padding(5.dp))
+        Card(
+            Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight(0.1f)
+                .selectableGroup()
+                .clickable {
+                    selectetLanguage.value = "hi"
+                }
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    stringResource(R.string.Hindi),
+                    fontSize = 22.sp
+                )
+            }
+        }
+        Spacer(modifier = Modifier.padding(5.dp))
+        Card(
+            Modifier
+                .fillMaxWidth(0.7f)
+                .fillMaxHeight(0.1f)
+                .clickable {
+                    selectetLanguage.value = "ur"
+                }
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(
+                    stringResource(R.string.Urdu),
+                    fontSize = 22.sp
+                )
+            }
+        }
+    }
+    return selectetLanguage.value
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun SelectCity() {
+    Column(
+        Modifier.background(MaterialTheme.colorScheme.primary),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        genericHeading(
+            text = stringResource(R.string.selectCity),
+            textSize = 28.sp
+        )
+        FlowColumn(
+            Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            genericDropDown()
+        }
+    }
+}
+
+@Preview(showSystemUi = true)
 @Composable
 fun DefaultPreview() {
-    SafeerTheme {
-        MainActivity()
-    }
+    SelectCity()
 }
