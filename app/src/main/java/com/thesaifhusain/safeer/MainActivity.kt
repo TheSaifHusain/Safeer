@@ -2,9 +2,11 @@ package com.thesaifhusain.safeer
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,31 +23,41 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.thesaifhusain.safeer.ui.theme.SafeerTheme
+import com.thesaifhusain.safeer.domain.myViewModel
+import com.thesaifhusain.safeer.domain.navigaion.Navigation
 import com.thesaifhusain.safeer.utils.genericDropDown
 import com.thesaifhusain.safeer.utils.genericHeading
+import dagger.hilt.android.AndroidEntryPoint
+import org.checkerframework.checker.units.qual.g
 import java.util.Locale
 
 lateinit var selectetLanguage: MutableState<String>
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
+            val viewModel: myViewModel by viewModels<myViewModel>()
+            Navigation(viewModel)
+
             val window: Window = this.window
             window.navigationBarColor = MaterialTheme.colorScheme.primary.toArgb()
-            SafeerTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    // changeLanguage("hi")
-                    // val navController = rememberNavController()
-                    // Navigation(navController = navController)
-                    SelectLanguage()
-                    changeLanguage()
-                }
-            }
+//            SafeerTheme {
+//                // A surface container using the 'background' color from the theme
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ) {
+//                    // changeLanguage("hi")
+//                    // val navController = rememberNavController()
+//                    // Navigation(navController = navController)
+//                    SelectLanguage()
+//                    changeLanguage()
+//                }
+//            }
         }
     }
 

@@ -1,16 +1,19 @@
 package com.thesaifhusain.safeer.domain.navigaion
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.thesaifhusain.safeer.domain.myViewModel
 import com.thesaifhusain.safeer.presentation.*
 import com.thesaifhusain.safeer.presentation.ConsoleScreens.AddMasjid
 
 @Composable
-fun Navigation(navController: NavHostController) {
+fun Navigation(viewModel: myViewModel ) {
+
+    val navController= rememberNavController()
     NavHost(
-        navController = navController,
+        navController = navController!!,
         startDestination = "home"
     ) {
         composable("welcome") { WelcomeScreen() }
@@ -19,6 +22,6 @@ fun Navigation(navController: NavHostController) {
         composable("register") { RegisterScreen() }
         composable("admin") { AdminScreen(navController) }
         composable("console") { ConsoleScreen(navController) }
-        composable("masjid") { AddMasjid() }
+        composable("masjid") { AddMasjid(null) }
     }
 }

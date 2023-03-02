@@ -20,11 +20,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thesaifhusain.safeer.R
+import com.thesaifhusain.safeer.domain.myViewModel
 import com.thesaifhusain.safeer.utils.*
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun AddMasjid() {
+fun AddMasjid(viewModel: myViewModel?) {
     val increaseContact = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
@@ -130,5 +131,5 @@ fun serviceCard(modifier: Modifier) {
 @Preview(name = "AddMasjid", showBackground = true)
 @Composable
 private fun PreviewAddMasjid() {
-    AddMasjid()
+    AddMasjid(null)
 }

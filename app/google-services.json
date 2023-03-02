@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "587261176796",
+    "project_id": "safeer-c317b",
+    "storage_bucket": "safeer-c317b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587261176796:android:460f4e900a459fae653d19",
+        "android_client_info": {
+          "package_name": "com.thesaifhusain.safeer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587261176796-f154fadsj4mt4dj101s150dsenbvn3lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCctGPLgQJjrwSADTgU384DOPw1ElBVzuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587261176796-f154fadsj4mt4dj101s150dsenbvn3lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
